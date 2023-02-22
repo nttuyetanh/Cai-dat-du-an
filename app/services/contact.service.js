@@ -13,14 +13,14 @@ class ContactService {
             favorite: payload.favorite,
         };
         // Remove undefined fields
-        Objects.keys(contact).forEach(
+        Object.keys(contact).forEach(
             (key) => contact[key] === undefined && delete contact[key]
-        );
-        return contact;
-        }
-        async create(payload) {
-            const contact = this.extractConactData(payload);
-            const result = await this.Contact.findOneAndUpdate(
+            );
+            return contact;
+    }
+    async create(payload) {
+        const contact = this.extractConactData(payload);
+        const result = await this.Contact.findOneAndUpdate(
             contact,
             { $set: { favorite: contact.favorite === true } },
             { returnDocument: "after", upsert: true }
@@ -34,7 +34,7 @@ class ContactService {
     }
 
     async findByName(name) {
-        return await this.find ({
+        return await this.find({
             name: { $regex: new RegExp(name), $options: "i" },
         });
     }
